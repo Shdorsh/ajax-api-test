@@ -1,3 +1,4 @@
+// Import the needed packages from npm
 const express = require('express');
 const mysql = require('mysql');
 
@@ -11,6 +12,7 @@ const dbConnection = mysql.createConnection({
     database: 'spotify_db'
 });
 
+// Define a simple route that will be used to run queries on the connected database
 server.get('/api/songs/:title', (req, res) => {
     dbConnection.query(`SELECT * FROM songs WHERE title LIKE '%${req.params.title}%'`, (error, rows, fields) => {
         if(error) {
@@ -21,6 +23,7 @@ server.get('/api/songs/:title', (req, res) => {
     });
 })
 
+// Try to connect to the database. Only if it works, keep listening for incoming requests
 dbConnection.connect(error => {
     if(error) {
         console.log(`Couldn't start server: ${error}`);
